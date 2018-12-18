@@ -7,8 +7,8 @@ public class MetaData {
 	private long timeStamp;
 	
 	public MetaData() {
-		Date d = new Date();
-	    this.timeStamp = d.getTime();	
+		Date da = new Date();
+	    this.timeStamp = da.getTime();	
 	}
 
 	public long getTimeStamp() {
