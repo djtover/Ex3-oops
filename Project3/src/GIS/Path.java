@@ -7,16 +7,16 @@ import Geom.Point3D;
 
 public class Path {
 
-//	private ArrayList <Fruit> AL;
-	private ArrayList<Point3D> AL;
+	private ArrayList <Fruit> AL;
+//	private ArrayList<Point3D> AL;
 	private double time;
 
 	public Path() {
-		this.AL  = new ArrayList<Point3D>();
+		this.AL  = new ArrayList<Fruit>();
 		time = 0;
 	}
 
-	public ArrayList<Point3D> getAL() {
+	public ArrayList<Fruit> getAL() {
 		return AL;
 	}
 	public double getTime() {
@@ -26,11 +26,11 @@ public class Path {
 		this.time = time;
 	}
 
-	public boolean add(Point3D f) {
+	public boolean add(Fruit f) {
 		return AL.add(f);
 
 	}
-	public Iterator<Point3D> iterator(){
+	public Iterator<Fruit> iterator(){
 		return AL.iterator();
 	}
 	public int size() {

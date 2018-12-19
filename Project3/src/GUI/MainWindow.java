@@ -1,4 +1,5 @@
 package GUI;
+import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -14,18 +15,25 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
-
+import java.awt.Desktop;
 import javax.imageio.ImageIO;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.filechooser.FileSystemView;
 
 import FileFormat.FromCsv;
+import FileFormat.ToCsv;
 import GIS.Fruit;
 import GIS.Game;
 import GIS.Map;
@@ -34,7 +42,11 @@ import GIS.ShortestPathAlgo;
 import GIS.Solution;
 import Geom.Point3D;
 
-
+/**
+ * This class represents the GUI of the Packman game
+ * @author David Tover
+ *
+ */
 public class MainWindow extends JFrame implements MouseListener, ComponentListener
 {
 	private BufferedImage myImage;
@@ -45,8 +57,12 @@ public class MainWindow extends JFrame implements MouseListener, ComponentListen
 	private int y = -1;
 	private ArrayList<Packman> pointsPack = new ArrayList<Packman>();
 	private ArrayList<Fruit> pointsFruit = new ArrayList<Fruit>();
-	
-	
+	private static int c = 1;
+
+	/**
+	 * This is the constructor for the class
+	 * @param imageName input the path of the image that you would like to put in the GUI
+	 */
 	public MainWindow(String imageName) 
 	{
 		this.addComponentListener(this);
@@ -61,7 +77,10 @@ public class MainWindow extends JFrame implements MouseListener, ComponentListen
 	public BufferedImage getMyImage() {
 		return myImage;
 	}
-
+	/**
+	 * This is a class that initiates the GUI
+	 * @param imageName input the path of the image that you would like to put in the GUI
+	 */
 	private void initGUI(String imageName) 
 	{
 		MenuBar menuBar = new MenuBar();
@@ -74,7 +93,31 @@ public class MainWindow extends JFrame implements MouseListener, ComponentListen
 		MenuItem toCsv = new MenuItem ("Save to CSV");
 		MenuItem fromCsv = new MenuItem ("Import CSV File");
 
+		toCsv.addActionListener(new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				isPack = false;
+				isRun = false;
+				isFruit = false;
+				
+				JFileChooser jfc = new JFileChooser();
+				jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+				jfc.setAcceptAllFileFilterUsed(false);
+				int rVal = jfc.showOpenDialog(getParent());
+				if(rVal == JFileChooser.APPROVE_OPTION) {
+					System.out.println("You chose this folder: " + jfc.getSelectedFile().getName());
+					String path = jfc.getSelectedFile().getPath() +"\\game"+ c + ".csv";
+					c++;
+					System.out.println(path);
+					ToCsv tc = new ToCsv(path, pointsPack , pointsFruit);
+				}
+				
+			}
+		});
+		
+		
 		PackMenu.addActionListener(new ActionListener() {
 
 			@Override
@@ -112,7 +155,7 @@ public class MainWindow extends JFrame implements MouseListener, ComponentListen
 				repaint();
 			}
 		});
-		
+
 		ClearMenu.addActionListener(new ActionListener() {
 
 			@Override
@@ -133,7 +176,15 @@ public class MainWindow extends JFrame implements MouseListener, ComponentListen
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-
+				isPack=false;
+				isFruit = false;
+				isRun =false;
+				pointsPack.clear();
+				pointsFruit.clear();
+				repaint();
+				
+				
+				
 				JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 
 				int returnValue = jfc.showOpenDialog(null);
@@ -153,13 +204,14 @@ public class MainWindow extends JFrame implements MouseListener, ComponentListen
 						}
 						isPack= false;
 						isFruit = false;
-						
-//						for(int i=0;i<pointsPack.size();i++) {
-//							System.out.println(pointsPack.get(i));
-//						}
-//						for(int i=0;i<pointsFruit.size();i++) {
-//							System.out.println(pointsFruit.get(i));
-//						}
+						isRun = false;
+
+//												for(int i=0;i<pointsPack.size();i++) {
+//													System.out.println(pointsPack.get(i));
+//												}
+						//						for(int i=0;i<pointsFruit.size();i++) {
+						//							System.out.println(pointsFruit.get(i));
+						//						}
 						repaint();
 					}	
 					else {
@@ -192,7 +244,9 @@ public class MainWindow extends JFrame implements MouseListener, ComponentListen
 		}		
 
 	}
-
+	/**
+	 * This is a method thats paints on the image that will put Packmans and Fruits on the image
+	 */
 	public void paint(Graphics g)
 	{
 		Map m = new Map(getWidth(),getHeight());
@@ -215,6 +269,33 @@ public class MainWindow extends JFrame implements MouseListener, ComponentListen
 				System.out.println(f1);
 			}
 		}
+
+		if(isRun) {
+			Game game = new Game(pointsPack,pointsFruit);
+			ArrayList <Point3D> startingPoints = new ArrayList<Point3D>();
+			for(int i=0;i<pointsPack.size();i++) {
+				startingPoints.add(m.Coords2Pixels(pointsPack.get(i).getP()));
+			}
+           
+
+			ShortestPathAlgo spa = new ShortestPathAlgo(game);
+			Solution s = new Solution(spa.getSolution());
+			System.out.println(s.getGame());
+			for(int i=0; i<s.getGame().getALP().size();i++) {
+				if(s.getGame().getALP().get(i).getPath().size()>0) {
+					g.setColor(Color.CYAN);
+					Point3D b = m.Coords2Pixels(s.getGame().getALP().get(i).getPath().getAL().get(0).getP());
+					g.drawLine(startingPoints.get(i).ix(), startingPoints.get(i).iy(),b.ix(),b.iy() );
+				}
+				for(int j=1;j<s.getGame().getALP().get(i).getPath().size();j++) {					
+					Point3D a = m.Coords2Pixels(s.getGame().getALP().get(i).getPath().getAL().get(j-1).getP());
+					Point3D b = m.Coords2Pixels(s.getGame().getALP().get(i).getPath().getAL().get(j).getP());
+					g.setColor(Color.CYAN);
+					g.drawLine(a.ix(),a.iy(),b.ix(),b.iy());
+				}
+			}		
+		}
+
 		for(int i = 0 ; i<pointsPack.size();i++) {
 			int r = 30;
 			Point3D pointDraw =  m.Coords2Pixels(pointsPack.get(i).getP());
@@ -232,44 +313,6 @@ public class MainWindow extends JFrame implements MouseListener, ComponentListen
 			g.fillOval(x, y, r, r);
 
 		}
-		if(isRun) {
-			isRun=false;
-			Game game = new Game(pointsPack,pointsFruit);
-			ShortestPathAlgo spa = new ShortestPathAlgo(game);
-			Solution s = new Solution(spa.getSolution());
-			System.out.println(s);
-			for(int i=0; i<s.getGame().getALP().size();i++) {
-				for(int j=1;j<s.getGame().getALP().get(i).getPath().size();j++) {
-//					if(s.getGame().getALP().get(i).getPath().size()>0) {
-//						Point3D a = m.Coords2Pixels(s.getGame().getALP().get(i).getP());
-//						Point3D b = m.Coords2Pixels(s.getGame().getALP().get(i).getPath().getAL().get(0));
-//						g.setColor(Color.CYAN);
-//						g.drawLine(a.ix(),a.iy(),b.ix(),b.iy());
-//					}
-					
-					Point3D a = m.Coords2Pixels(s.getGame().getALP().get(i).getPath().getAL().get(j-1));
-					Point3D b = m.Coords2Pixels(s.getGame().getALP().get(i).getPath().getAL().get(j));
-					g.setColor(Color.CYAN);
-					g.drawLine(a.ix(),a.iy(),b.ix(),b.iy());
-				}
-
-			}
-			for(int i = 0 ; i<pointsPack.size();i++) {
-				int r = 30;
-				Point3D pointDraw =  m.Coords2Pixels(pointsPack.get(i).getP());
-				x = pointDraw.ix() - (r/2);
-				y = pointDraw.iy() - (r/2);
-				g.setColor(Color.RED);
-				g.fillOval(x, y, r, r);
-			}
-			
-			
-		}
-
-		//        g.drawLine(200, 100, 100, 200);
-
-
-
 	}
 
 
@@ -324,10 +367,7 @@ public class MainWindow extends JFrame implements MouseListener, ComponentListen
 		//		System.out.println("resized " + getWidth()+" "+ getHeight());
 		isPack = false;
 		isFruit = false;
-		isRun = false;
-
-
-
+//		isRun = false;
 	}
 
 	@Override

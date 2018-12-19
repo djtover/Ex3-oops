@@ -1,5 +1,6 @@
 package GIS;
 
+
 import Geom.Point3D;
 /**
  * This is a class that represents a Fruit
@@ -12,12 +13,8 @@ public class Fruit {
 	private int weight;
 	private static int size=0;
 	private int id;
-	private MetaData md;
-
-	
-	public Fruit() {
-		
-	}
+	private double time;
+	private Packman pred;	
 	/**
 	 * This is constructor to build a new Fruit
 	 * @param lat input the latitude for the coordinates of the Fruit
@@ -30,7 +27,8 @@ public class Fruit {
 		this.weight = Weight;
 		id = size;
 		this.size++;
-		md = new MetaData();
+		time=0;
+		pred = null;
 	}
 	/**
 	 * This is a constructor to build a Fruit from another Fruit
@@ -40,15 +38,13 @@ public class Fruit {
 		this.p = other.getP();
 		this.weight = other.getWeight();
 		this.size = other.getsize();
-		this.md = other.getMd(); 
+		time = other.getTime();
+		pred = other.getPred();
 	}
 
 
 	public int getId() {
 		return id;
-	}
-	public MetaData getMd() {
-		return md;
 	}
 
 
@@ -75,12 +71,20 @@ public class Fruit {
 	public int getsize() {
 		return size;
 	}
+	public double getTime() {
+		return time;
+	}
+	public void setTime(double time) {
+		this.time = time;
+	}
+	public Packman getPred() {
+		return pred;
+	}
+	public void setPred(Packman pred) {
+		this.pred = pred;
+	}
 
-
-//	public void setsize(int size) {
-//		this.size = size;
-//	}
 	public String toString() {
-		return(" Fruit: "+ p+" Weight: " +this.weight+" ID: " +id+ " " + md);
+		return(" Fruit: "+ p+" Weight: " +this.weight+" ID: " +id+ " Time:" +time);
 	}
 }

@@ -35,7 +35,7 @@ public class Packman {
 		this.radius = Radius;
 		md = new MetaData();
 		path = new Path();
-		path.add(p);
+//		path.add(p);
 	}
 	/**
 	 * This is a constructor to build a Packman from another Packman
@@ -81,6 +81,9 @@ public class Packman {
 	
 	public int getRadius() {
 		return radius;
+	}
+	public int getId() {
+		return id;
 	}
 
 	public void setRadius(int radius) {

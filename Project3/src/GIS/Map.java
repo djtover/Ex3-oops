@@ -35,8 +35,8 @@ public class Map {
 		double rx = dx/diffLat;
 		double ry = dy/diffLon;
 		
-		int w = (int)(ry*width);
-		int h = (int)(rx*height);
+		int w = (int)(ry*width) +1;
+		int h = (int)(rx*height)+1;
 		
 		Point3D ans = new Point3D(w,h,p1.z());
 //		System.out.println(ans);
@@ -83,6 +83,11 @@ public class Map {
 		
 		Map m = new Map(1386,642);
 		Point3D p2= new Point3D(m.Pixels2Coords(p1, m.getWidth(), m.getHeight()));
-		m.Coords2Pixels(p2);
+//		m.Coords2Pixels(p2);
+		System.out.println(p2);
+		Point3D p3 = m.Coords2Pixels(p2);
+		p3 = m.Pixels2Coords(p3, m.getWidth(), m.getHeight());
+		System.out.println(p3);
+		
 	}
 }

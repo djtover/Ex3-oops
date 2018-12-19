@@ -1,7 +1,11 @@
 package GIS;
 
 import java.util.Date;
-
+/**
+ * This class represents a metadata that is the timestamp of the object on when it was created or found
+ * @author David Tover
+ *
+ */
 public class MetaData {
 
 	private long timeStamp;
@@ -11,7 +15,7 @@ public class MetaData {
 	    this.timeStamp = da.getTime();	
 	}
 
-	public long getTimeStamp() {
+	public long getTimeStamp() {	
 		return timeStamp;
 	}
 	public String toString() {
