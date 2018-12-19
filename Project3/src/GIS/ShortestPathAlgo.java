@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.PriorityQueue;
 
 import Geom.MyCoords;
+import Geom.Point3D;
 
 
 public class ShortestPathAlgo {
@@ -24,34 +25,40 @@ public class ShortestPathAlgo {
 
 
 		Packman closestP = null;
-		Fruit closestF = null;
+		Point3D closestF = null;
 		MyCoords mc = new MyCoords();
-		int index=-1;
-
+		int indexF=-1;
+        int indexP=-1;
 		while (!alfCopy.isEmpty()) {
 			for(int i=0; i<alp.size();i++) {
 				Packman p1 = new Packman(alp.get(i));
 				double closestTime = Double.MAX_VALUE;
 				for(int j=0; j<alfCopy.size();j++) {
-					Fruit f1 = new Fruit(alfCopy.get(j));
-					if(closestTime > (mc.distance3d(p1.getP(), f1.getP())/p1.getSpeed()) + p1.getPath().getTime()) {
-						closestTime = (mc.distance3d(p1.getP(), f1.getP())/p1.getSpeed()) + p1.getPath().getTime();
+					Point3D f1 = new Point3D(alfCopy.get(j).getP());
+					if(closestTime > (mc.distance3d(p1.getP(), f1))/(p1.getSpeed()) + p1.getPath().getTime()) {
+						closestTime = (mc.distance3d(p1.getP(), f1)/p1.getSpeed()) + p1.getPath().getTime();
 						closestP = p1;
 						closestF = f1;
-						index =j;
+						indexF = j;
+						indexP = i;
 					}
 					
 				}
-				if(index!=-1) {
+				if(indexF!=-1 || indexP!=-1 || closestP!=null || closestF!=null) {
 				closestP.getPath().add(closestF);
 				closestP.getPath().setTime(closestTime + closestP.getPath().getTime());
-				closestP.setP(closestF.getP());
-				alfCopy.remove(index);
+//				System.out.println(alp.get(indexP).getP() +"Before Change");
+//				closestP.setP(closestF.getP());
+				alp.get(indexP).setP(closestF);
+//				System.out.println(alp.get(indexP).getP()+ "After Change");
+                System.out.println(indexF +""+ alfCopy.size());
+				alfCopy.remove(indexF);
 				}
 			}
 			closestP =null;
 			closestF =null;
-			index=-1;
+			indexF=-1;
+			indexP=-1;
 		}
 
 

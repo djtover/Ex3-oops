@@ -222,9 +222,6 @@ public class MainWindow extends JFrame implements MouseListener, ComponentListen
 			y = pointDraw.iy() - (r/2);
 			g.setColor(Color.YELLOW);
 			g.fillOval(x, y, r, r);
-
-
-
 		}
 		for(int i = 0 ; i<pointsFruit.size();i++) {
 			int r = 10;
@@ -236,26 +233,36 @@ public class MainWindow extends JFrame implements MouseListener, ComponentListen
 
 		}
 		if(isRun) {
+			isRun=false;
 			Game game = new Game(pointsPack,pointsFruit);
 			ShortestPathAlgo spa = new ShortestPathAlgo(game);
 			Solution s = new Solution(spa.getSolution());
 			System.out.println(s);
 			for(int i=0; i<s.getGame().getALP().size();i++) {
 				for(int j=1;j<s.getGame().getALP().get(i).getPath().size();j++) {
-					if(s.getGame().getALP().get(i).getPath().size()>0) {
-						Point3D a = m.Coords2Pixels(s.getGame().getALP().get(i).getP());
-						Point3D b = m.Coords2Pixels(s.getGame().getALP().get(i).getPath().getAL().get(0).getP());
-						g.setColor(Color.CYAN);
-						g.drawLine(a.ix(),a.iy(),b.ix(),b.iy());
-					}
+//					if(s.getGame().getALP().get(i).getPath().size()>0) {
+//						Point3D a = m.Coords2Pixels(s.getGame().getALP().get(i).getP());
+//						Point3D b = m.Coords2Pixels(s.getGame().getALP().get(i).getPath().getAL().get(0));
+//						g.setColor(Color.CYAN);
+//						g.drawLine(a.ix(),a.iy(),b.ix(),b.iy());
+//					}
 					
-					Point3D a = m.Coords2Pixels(s.getGame().getALP().get(i).getPath().getAL().get(j-1).getP());
-					Point3D b = m.Coords2Pixels(s.getGame().getALP().get(i).getPath().getAL().get(j).getP());
+					Point3D a = m.Coords2Pixels(s.getGame().getALP().get(i).getPath().getAL().get(j-1));
+					Point3D b = m.Coords2Pixels(s.getGame().getALP().get(i).getPath().getAL().get(j));
 					g.setColor(Color.CYAN);
 					g.drawLine(a.ix(),a.iy(),b.ix(),b.iy());
 				}
 
 			}
+			for(int i = 0 ; i<pointsPack.size();i++) {
+				int r = 30;
+				Point3D pointDraw =  m.Coords2Pixels(pointsPack.get(i).getP());
+				x = pointDraw.ix() - (r/2);
+				y = pointDraw.iy() - (r/2);
+				g.setColor(Color.RED);
+				g.fillOval(x, y, r, r);
+			}
+			
 			
 		}
 

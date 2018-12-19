@@ -3,17 +3,20 @@ package GIS;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import Geom.Point3D;
+
 public class Path {
 
-	private ArrayList <Fruit> AL;
+//	private ArrayList <Fruit> AL;
+	private ArrayList<Point3D> AL;
 	private double time;
 
 	public Path() {
-		this.AL  = new ArrayList<Fruit>();
+		this.AL  = new ArrayList<Point3D>();
 		time = 0;
 	}
 
-	public ArrayList<Fruit> getAL() {
+	public ArrayList<Point3D> getAL() {
 		return AL;
 	}
 	public double getTime() {
@@ -23,11 +26,11 @@ public class Path {
 		this.time = time;
 	}
 
-	public boolean add(Fruit f) {
+	public boolean add(Point3D f) {
 		return AL.add(f);
 
 	}
-	public Iterator<Fruit> iterator(){
+	public Iterator<Point3D> iterator(){
 		return AL.iterator();
 	}
 	public int size() {

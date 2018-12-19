@@ -44,6 +44,9 @@ public class Fruit {
 	}
 
 
+	public int getId() {
+		return id;
+	}
 	public MetaData getMd() {
 		return md;
 	}
@@ -74,9 +77,9 @@ public class Fruit {
 	}
 
 
-	public void setsize(int size) {
-		this.size = size;
-	}
+//	public void setsize(int size) {
+//		this.size = size;
+//	}
 	public String toString() {
 		return(" Fruit: "+ p+" Weight: " +this.weight+" ID: " +id+ " " + md);
 	}
