@@ -8,10 +8,22 @@ import java.util.ArrayList;
 import GIS.Fruit;
 import GIS.Packman;
 
+
+/**
+ * This is a class that represents a way to extract data from a csv file
+ * @author David Tover
+ *
+ */
 public class FromCsv {
 
 	private ArrayList<Fruit> ALF;
 	private ArrayList<Packman> ALP;
+	
+	
+	/**
+	 * This is the constructor for the way to extract data from a csv file
+	 * @param csvFile input the name of the file you want to extract data from
+	 */
 	public FromCsv(String csvFile) {
 		
 		ALF = new ArrayList<Fruit>();
@@ -35,32 +47,19 @@ public class FromCsv {
 				if(userInfo[0].equals("P")) {
 					int speed = Integer.parseInt(userInfo[5]);
 					int radius = Integer.parseInt(userInfo[6]);
-					//need to fix this
 					Packman p = new Packman(lat,lon,alt,speed, radius);
-//					System.out.println(p);
-//					System.out.println(p);
 					ALP.add(p);
 					
-//					flag=ALP.add(p);
 					
 				}
 				else if(userInfo[0].equals("F")) {
 					int weight = Integer.parseInt(userInfo[5]);
-					//need to fix this
 					Fruit f = new Fruit(lat,lon,alt,weight);	
-//					System.out.println(f);
 					ALF.add(f);
-					
-					
-					
-					
-//					flag = ALF.add(f);
 				}
 					
 
 			}
-//			System.out.println(ALP.size());
-//			System.out.println(ALF.size());
 			br.close();
 		} catch (IOException e) 
 		{
@@ -73,7 +72,7 @@ public class FromCsv {
 	public ArrayList<Packman> getALP() {
 		return ALP;
 	}
-	public static void main (String [] args) {
-		FromCsv newFile = new FromCsv("C:\\Users\\djtov\\Downloads\\Ex3 (2)\\Ex3\\data\\game_1543684662657.csv") ;
-	}
+//	public static void main (String [] args) {
+//		FromCsv newFile = new FromCsv("C:\\Users\\djtov\\Downloads\\Ex3 (2)\\Ex3\\data\\game_1543684662657.csv") ;
+//	}
 }

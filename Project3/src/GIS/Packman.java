@@ -1,7 +1,11 @@
 package GIS;
 
 import Geom.Point3D;
-
+/**
+ * This class represents a Packman 
+ * @author David Tover
+ *
+ */
 public class Packman {
 	private Point3D p;
 	private int speed;
@@ -15,6 +19,14 @@ public class Packman {
 	public Packman() {
 		
 	}
+	/**
+	 * This is constructor to build a new Packman
+	 * @param lat input the latitude for the coordinates of the Packman
+	 * @param lon input the longitude for the coordinates of the Packman
+	 * @param alt input the altitude for the coordinates of the Packman
+	 * @param Speed input the speed you want your Packman to run
+	 * @param Radius input the radius of the Packman tht it could eat a Fruit
+	 */
 	public Packman(double lat, double lon, double alt, int Speed,int Radius) {
 		p = new Point3D(lat,lon,alt);
 		this.speed = Speed;
@@ -24,6 +36,10 @@ public class Packman {
 		md = new MetaData();
 		path = new Path();
 	}
+	/**
+	 * This is a constructor to build a Packman from another Packman
+	 * @param other Input a Packman 
+	 */
 	public Packman(Packman other) {
 		this.p = other.getP();
 		this.speed = other.getSpeed();
@@ -61,11 +77,7 @@ public class Packman {
 	public int getsize() {
 		return size;
 	}
-
-//	public vosize setsize(int size) {
-//		this.size = size;
-//	}
-
+	
 	public int getRadius() {
 		return radius;
 	}

@@ -254,13 +254,7 @@ public class MainWindow extends JFrame implements MouseListener, ComponentListen
 					g.setColor(Color.CYAN);
 					g.drawLine(a.ix(),a.iy(),b.ix(),b.iy());
 				}
-//				int r = 30;
-//				int size =s.getGame().getALP().get(i).getPath().size();
-//				Point3D pointDraw =  m.Coords2Pixels(s.getGame().getALP().get(i).getPath().getAL().get(size-1).getP());
-//				x = pointDraw.ix() - (r/2);
-//				y = pointDraw.iy() - (r/2);
-//				g.setColor(Color.YELLOW);
-//				g.fillOval(x, y, r, r);
+
 			}
 			
 		}
@@ -323,6 +317,7 @@ public class MainWindow extends JFrame implements MouseListener, ComponentListen
 		//		System.out.println("resized " + getWidth()+" "+ getHeight());
 		isPack = false;
 		isFruit = false;
+		isRun = false;
 
 
 
