@@ -8,12 +8,14 @@ import Geom.Point3D;
 public class Path {
 
 	private ArrayList <Fruit> AL;
-//	private ArrayList<Point3D> AL;
+	//	private ArrayList<Point3D> AL;
 	private double time;
+	private int weight;
 
 	public Path() {
 		this.AL  = new ArrayList<Fruit>();
 		time = 0;
+		weight=0;
 	}
 
 	public ArrayList<Fruit> getAL() {
@@ -41,11 +43,19 @@ public class Path {
 		AL.clear();
 	}
 
-  public String toString() {
-	  String s = "Path: ";
-	  for(int i =0; i<AL.size();i++) {
-		  s=s+" "+ AL.get(i);
-	  }
-	  return (s+ "Time: "+time);
-  }
+
+	public int getWeight() {
+		return weight;
+	}
+
+	public void setWeight(int weight) {
+		this.weight = weight;
+	}
+	public String toString() {
+		String s = "Path: ";
+		for(int i =0; i<AL.size();i++) {
+			s=s+" "+ AL.get(i);
+		}
+		return (s+ "Time: "+time + " Weight: "+ weight);
+	}
 }

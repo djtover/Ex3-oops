@@ -13,16 +13,26 @@ public class Game {
 
 	private ArrayList<Fruit> ALF;
 	private ArrayList<Packman> ALP;
-
+	private double time;
 	public Game() {
 		this.ALF = new ArrayList<Fruit>();
 		this.ALP = new ArrayList<Packman>();
+		time = 0;
+		
 	}
 	//csv file constructor
 	public Game(String csvFile) {
 		FromCsv fc = new FromCsv(csvFile); 
 		ALF = fc.getALF();
 		ALP = fc.getALP();
+		time = 0;
+		
+	}
+	public double getTime() {
+		return time;
+	}
+	public void setTime(double time) {
+		this.time = time;
 	}
 	public Game(ArrayList<Packman> alp , ArrayList<Fruit> alf) {
 		this.ALF = new ArrayList<Fruit>(alf);
@@ -56,6 +66,7 @@ public class Game {
 	   for(int i=0; i<ALP.size();i++) {
 		   s=s+ (ALP.get(i).toString());
 	   }
+	   s+= " Time: "+ time;
 	   return s;
    }
 }

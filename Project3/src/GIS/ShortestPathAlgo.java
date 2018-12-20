@@ -34,7 +34,14 @@ public class ShortestPathAlgo {
 		ArrayList<Fruit> alf = g.getALF();
 		ArrayList <Packman> alp = g.getALP();
 		ArrayList <Fruit>	alfCopy = new ArrayList<Fruit>(alf);
-
+        
+		for(int i=0;i< alp.size();i++) {
+			alp.get(i).setStartingPoint(alp.get(i).getP());
+			if(alp.get(i).getPath().size()>0) {
+				alp.get(i).getPath().clear();
+			}
+			alp.get(i).getPath().setTime(0);
+		}
 
 		Packman closestP = null;
 		Fruit closestF = null;
@@ -50,19 +57,20 @@ public class ShortestPathAlgo {
 			closestF = alfCopy.get(0);
 			indexF = 0;
 		}
-
+//		double closestTime = Double.MAX_VALUE;
 //	while alfCopy is greater than zero because the algorithm will remove Fruits when it finds the closest one to a Pacman
 		while(alfCopy.size()>0) {
 			// run through all the pacman
+			double closestTime = Double.MAX_VALUE;
 			for(int i=0; i<alp.size();i++) {
 				Packman p1 = alp.get(i);
-				double closestTime = Double.MAX_VALUE;
+//				double closestTime = Double.MAX_VALUE;
 				
 				for(int j=0; j<alfCopy.size();j++) {
 					Fruit f1 = alfCopy.get(j);
 //					if closest time is greater than the time it to take to get to the next Fruit then update closest time 
-					if(closestTime > ((mc.distance3d(p1.getP(), f1.getP()))-p1.getRadius())/(p1.getSpeed()) + p1.getPath().getTime()) {
-						closestTime = ((mc.distance3d(p1.getP(), f1.getP())-p1.getRadius())/p1.getSpeed()) + p1.getPath().getTime();
+					if(closestTime > ((mc.distance3d(p1.getP(), f1.getP())))/(p1.getSpeed()) + p1.getPath().getTime()) {
+						closestTime = ((mc.distance3d(p1.getP(), f1.getP()))/p1.getSpeed()) + p1.getPath().getTime();
 						closestP = p1;
 						closestF = f1;
 						indexF = j;
@@ -71,20 +79,27 @@ public class ShortestPathAlgo {
 					}
 
 				}
+			}
 //				set the predecessor of the closest fruit, then add the closest fruit to the path of the closest pacman
 //				update the time of the closest pacman and closest Fruit
 //				update the coordinates of the pacman to be the coordinates of the fruit it just ate
 //				then remove the fruit from the arraylist
+					closestF.setTime();
 					closestF.setPred(closestP);
 					closestP.getPath().add(closestF);
-					closestP.getPath().setTime(closestTime + closestP.getPath().getTime());
-					closestF.setTime(closestP.getPath().getTime());
-					alp.get(indexP).setP(closestF.getP());
+//					System.out.println(closestTime  +" when "+ closestP.getId() +" finds " +closestF.getId() + " Weight: "+closestP.getPath().getWeight());
+//					closestP.getPath().setTime(closestTime + closestP.getPath().getTime());
+					closestP.getPath().setTime(closestTime);
+					closestP.setP(closestF.getP());
+					closestP.getPath().setWeight(closestP.getPath().getWeight() + closestF.getWeight());
+					System.out.println(closestTime  +" when "+ closestP.getId() +" finds " +closestF.getId() + " Weight: "+closestP.getPath().getWeight());
+
+//					alp.get(indexP).setP(closestF.getP());
 					if(indexF<alfCopy.size()) {
 						alfCopy.remove(indexF);
 
 				}
-			}
+//			}
 			if(alp.size()>0) {
 				closestP = alp.get(0);
 				indexP=0;
@@ -94,8 +109,16 @@ public class ShortestPathAlgo {
 				indexF = 0;
 			}
 		}
+		double topTime =0;
+		for(int i=0;i < alp.size();i++) {
+			if(topTime < alp.get(i).getPath().getTime()) {
+				topTime =  alp.get(i).getPath().getTime();
+			}
+		}
+		
 		Game newG = new Game(alp , alf);
-
+        newG.setTime(topTime);
+        System.out.println("Time it takes to run algo is: " + topTime);
 		return newG;
 
 	}

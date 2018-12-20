@@ -1,6 +1,8 @@
 package GIS;
 
 
+import java.util.Date;
+
 import Geom.Point3D;
 /**
  * This is a class that represents a Fruit
@@ -13,7 +15,7 @@ public class Fruit {
 	private int weight;
 	private static int size=0;
 	private int id;
-	private double time;
+	private long timeStamp;
 	private Packman pred;	
 	/**
 	 * This is constructor to build a new Fruit
@@ -27,7 +29,7 @@ public class Fruit {
 		this.weight = Weight;
 		id = size;
 		this.size++;
-		time=0;
+		timeStamp=0;
 		pred = null;
 	}
 	/**
@@ -38,7 +40,7 @@ public class Fruit {
 		this.p = other.getP();
 		this.weight = other.getWeight();
 		this.size = other.getsize();
-		time = other.getTime();
+		timeStamp = other.getTime();
 		pred = other.getPred();
 	}
 
@@ -71,11 +73,12 @@ public class Fruit {
 	public int getsize() {
 		return size;
 	}
-	public double getTime() {
-		return time;
+	public long getTime() {
+		return timeStamp;
 	}
-	public void setTime(double time) {
-		this.time = time;
+	public void setTime() {
+		Date d =  new Date();
+		this.timeStamp = d.getTime();
 	}
 	public Packman getPred() {
 		return pred;
@@ -85,6 +88,6 @@ public class Fruit {
 	}
 
 	public String toString() {
-		return(" Fruit: "+ p+" Weight: " +this.weight+" ID: " +id+ " Time:" +time);
+		return(" Fruit: "+ p+" Weight: " +this.weight+" ID: " +id+ " Time:" +timeStamp);
 	}
 }

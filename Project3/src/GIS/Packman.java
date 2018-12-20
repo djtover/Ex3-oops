@@ -14,8 +14,10 @@ public class Packman {
 	private int radius;
 	private MetaData md;
 	private Path path;
+	private Point3D startingPoint;
 
 
+	
 	public Packman() {
 		
 	}
@@ -35,6 +37,7 @@ public class Packman {
 		this.radius = Radius;
 		md = new MetaData();
 		path = new Path();
+		startingPoint = new Point3D(p);
 //		path.add(p);
 	}
 	/**
@@ -48,6 +51,7 @@ public class Packman {
 		this.radius = other.getRadius();
 		this.md = other.getMd();
 		this.path = other.getPath();
+		startingPoint = other.getStartingPoint();
 		
 	}
 
@@ -88,6 +92,12 @@ public class Packman {
 
 	public void setRadius(int radius) {
 		this.radius = radius;
+	}
+	public Point3D getStartingPoint() {
+		return startingPoint;
+	}
+	public void setStartingPoint(Point3D startingPoint) {
+		this.startingPoint = startingPoint;
 	}
 	public String toString() {
 		return(" Packman: "+ p+" Speed: "+ speed+ " ID: "+id +" Radius: "+radius+" "+ md + " "+path);
