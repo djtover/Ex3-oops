@@ -278,11 +278,10 @@ public class MainWindow extends JFrame implements MouseListener, ComponentListen
 
 		g.drawImage(myImage, 0, 0, getWidth()-8,getHeight()-8, this);
 
-
 		if(x!=-1 && y!=-1 )
 		{
+			
 			Point3D point = new Point3D(x,y);
-			System.out.println(point);
 			Point3D newPoint=new Point3D (m.Pixels2Coords(point, getWidth(), getHeight()));
 			if(isPack) {
 				Packman p1 = new Packman(newPoint.x(),newPoint.y(),0,1,1);
@@ -295,13 +294,8 @@ public class MainWindow extends JFrame implements MouseListener, ComponentListen
 				System.out.println(f1);
 			}
 		}
-
 		if(isRun) {
 			Game game = new Game(pointsPack,pointsFruit);
-//			ArrayList <Point3D> startingPoints = new ArrayList<Point3D>();
-//			for(int i=0;i<pointsPack.size();i++) {
-//				startingPoints.add(m.Coords2Pixels(pointsPack.get(i).getP()));
-//			}
            
 
 			ShortestPathAlgo spa = new ShortestPathAlgo(game);
@@ -321,9 +315,8 @@ public class MainWindow extends JFrame implements MouseListener, ComponentListen
 					g.drawLine(a.ix(),a.iy(),b.ix(),b.iy());
 				}
 			}	
-			
 		}
-
+		
 		for(int i = 0 ; i<pointsPack.size();i++) {
 			int r = 30;
 			Point3D pointDraw =  m.Coords2Pixels(pointsPack.get(i).getP());

@@ -1,5 +1,10 @@
 package GIS;
-
+/**
+ * This is class that represents the solution of the game
+ * Field 1: This is the game that is to be with the game after it has run
+ * @author djtov
+ *
+ */
 public class Solution {
 	
 	private Game game;

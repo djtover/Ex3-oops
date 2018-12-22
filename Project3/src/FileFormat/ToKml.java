@@ -4,11 +4,18 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import GIS.Fruit;
 import GIS.Packman;
-
+/**
+ * This is a class that represents converting the pacman game to a kml file
+ * @author David Tover
+ *
+ */
 public class ToKml {
 
 
@@ -20,41 +27,55 @@ public class ToKml {
 			fw = new FileWriter(f);
 			BufferedWriter bw = new BufferedWriter(fw);
 
-			String header = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" + 
-					"<kml xmlns=\"http://www.opengis.net/kml/2.2\"><Document><Style id=\"red\"><IconStyle><Icon><href>http://maps.google.com/mapfiles/ms/icons/red-dot.png</href></Icon></IconStyle></Style><Style id=\"yellow\"><IconStyle><Icon><href>http://maps.google.com/mapfiles/ms/icons/yellow-dot.png</href></Icon></IconStyle></Style><Style id=\"green\"><IconStyle><Icon><href>http://maps.google.com/mapfiles/ms/icons/green-dot.png</href></Icon></IconStyle></Style><Folder><name>Wifi Networks</name>\r\n" + 
-					"";
+			String header = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n" + 
+					"<kml xmlns=\"http://www.opengis.net/kml/2.2\">\r\n" + 
+					"    <Document>\r\n"; 
+					
 			bw.write(header);
 
 			for(int i=0; i<alp.size();i++) {
-				String id = "P"+ alp.get(i).getId();
+//				drawing the starting point of the pacman
+				String id = ""+ alp.get(i).getId();
 				String lat = ""+ alp.get(i).getStartingPoint().x();
 				String lon = ""+ alp.get(i).getStartingPoint().y();
-				//				String alt = ""+ alp.get(i).getP().z();
-				String timeStamp = "" + alp.get(i).getMd();
+				String timeStamp = "" + convertTime(alp.get(i).getTimeStamp());
 
 				String context = "<Placemark>\r\n" + 
-						"<name><![CDATA["+id+"]]></name>\r\n" + 
-						"<description><![CDATA[BSSID:<br/>Capabilities: <br/>Timestamp: <b>"+timeStamp+"</b>]]></description><styleUrl>#red</styleUrl>\r\n" + 
+						"<name>"+"Packman"+id+"</name>\r\n" + 
+						"<description>A Packman Point</description>\r\n"+
 						"<Point>\r\n" + 
-						"<coordinates>"+lon+","+lat+"</coordinates></Point>\r\n" + 
+						"<coordinates>"+lon+","+lat+",0</coordinates></Point>\r\n" + 
+						"<TimeStamp>\r\n <when> "+timeStamp+" </when>\r\n </TimeStamp>\r\n"+
 						"</Placemark>\r\n" ;
+				
 				bw.write(context);
+//				drawing all the other points on the pacmans path
+				for(int j=0; j<alp.get(i).getPath().size();j++) {
+					
+					 id = ""+ alp.get(i).getPath().getAL().get(j).getId();
+					 lat = ""+ alp.get(i).getPath().getAL().get(j).getP().x();
+					 lon = ""+ alp.get(i).getPath().getAL().get(j).getP().y();
+					 timeStamp = "" + convertTime(alp.get(i).getPath().getAL().get(j).getTimeStamp());
+
+					 context = "<Placemark>\r\n" + 
+							"<name>"+"Fruit"+id+"</name>\r\n" + 
+							"<description>A Fruit Point on Packman "+ i +"'s path</description>\r\n"+
+							"<Point>\r\n" + 
+							"<coordinates>"+lon+","+lat+"</coordinates></Point>\r\n" + 
+							"<TimeStamp>\r\n <when>"+ timeStamp+"</when>\r\n </TimeStamp>/r/n"+
+							"</Placemark>\r\n" ;
+					bw.write(context);
+				}
 			}
 			
-			for(int i=0; i<alf.size();i++) {
-				String id = "F"+ alf.get(i).getId();
-				String lat = ""+ alf.get(i).getP().x();
-				String lon = ""+ alf.get(i).getP().y();
-				String timeStamp ="" + alf.get(i).getTime();
-				String context = "<Placemark>\r\n" + 
-						"<name><![CDATA["+id+"]]></name>\r\n" + 
-						"<description><![CDATA[BSSID:<br/>Capabilities: <br/>Timestamp: <b>"+timeStamp+"</b>]]></description><styleUrl>#red</styleUrl>\r\n" + 
-						"<Point>\r\n" + 
-						"<coordinates>"+lon+","+lat+"</coordinates></Point>\r\n" + 
-						"</Placemark>\r\n" ;
-				bw.write(context);
-
-			}
+			
+			
+			
+			
+			
+			
+			
+//			drawing lines between all the fruit in the path
 			for(int i=0;i<alp.size();i++) {
 			String s="	<Placemark>\r\n "+
 					 "<LineString>\r\n"+
@@ -76,8 +97,8 @@ public class ToKml {
 			
 		
 			
-			String closer = "</Folder>\r\n" + 
-					"</Document></kml>";
+			String closer = "</Document>\r\n</kml>";//"</Folder>\r\n" + 
+//					"</Document>\r\n</kml>";
 			bw.write(closer);
 			bw.close();
 
@@ -88,5 +109,15 @@ public class ToKml {
 			e.printStackTrace();
 		}
 
+	}
+	/**
+	 * This is a private method that converts the time from long to the date in a string
+	 * @param time input in long
+	 * @return A String of the date converted from the input
+	 */
+	private String convertTime(long time){
+	    Date date = new Date(time*1000);
+	    Format format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	    return format.format(date);
 	}
 }

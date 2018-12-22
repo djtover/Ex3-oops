@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import Geom.MyCoords;
 import Geom.Point3D;
 
 class MapTest {
@@ -27,7 +28,11 @@ class MapTest {
 	}
 	@Test
 	void testDistanceBetweenPixels() {
-		
+		Map m = new Map(1386,642,"Ariel1.png");
+		Point3D p1 = new Point3D(703,536);
+		Point3D p2 = new Point3D(756,168);
+		double ans = m.DistanceBetweenPixels(p1, p2);
+		assertEquals(256.5558688234459,ans);
 	}
 
 }

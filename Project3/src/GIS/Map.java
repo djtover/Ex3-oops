@@ -65,26 +65,27 @@ public class Map {
 		return p2;
 	
 	}
-//	public double DistanceBetweenPixels(Point3D p1, Point3D p2) {
-//		MyCoords mc = new MyCoords();
-//		double dx = mc.distance3d(LT, RT);
-//		double dy = mc.distance3d(LT, LB);
-//		double meterPerX = dx / getWidth();
-//		double meterPerY = dy / getHeight();
-//		
-//		int y = Math.abs(p2.iy()-p1.iy());
-//		int x = Math.abs(p2.ix()-p1.ix());
-//		
-//		double ry = y/getHeight();
-//		double rx = x/getWidth();
-//		
-//		double disy = ry*meterPerY;
-//		double disx = rx*meterPerX;
-//		
-//		return Math.sqrt(disy*disy + disx*disx);
-//		
-//				
-//	}
+	/**
+	 * This method finds the distance between 2 pixels in meters based on the image
+	 * @param p1 first pixel
+	 * @param p2 second pixel
+	 * @return distance between the pixels
+	 */
+	public double DistanceBetweenPixels(Point3D p1, Point3D p2) {
+		MyCoords mc = new MyCoords();
+		double dx = mc.distance3d(LT, RT);
+		double dy = mc.distance3d(LT, LB);
+		int y = Math.abs(p2.iy()-p1.iy());
+		int x = Math.abs(p2.ix()-p1.ix());
+		double ry = y/getHeight();
+		double rx = x/getWidth();
+		double disy = ry*dy;
+		double disx = rx*dx;
+		
+		return Math.sqrt(disy*disy + disx*disx);
+		
+				
+	}
 	public double getLatPerHeight() {
 		return latPerHeight;
 	}
@@ -103,10 +104,10 @@ public class Map {
 	public static void main(String []args) {
 		
 		
-		Map m = new Map(1386,642,"Ariel1.png");
+//		Map m = new Map(1386,642,"Ariel1.png");
 //		Point3D p1 = new Point3D(32.10255812461059,35.207452022366525,650);
 //		Point3D p2 = new Point3D(32.10484293457944,35.20783109090909,650);
-		MyCoords mc = new MyCoords();
+//		MyCoords mc = new MyCoords();
 //		
 //		double ans = mc.distance3d(p1, p2);
 		

@@ -8,14 +8,14 @@ import java.util.Date;
  */
 public class MetaData {
 
-	private long timeStamp;
+	private Date timeStamp;
 	
 	public MetaData() {
 		Date da = new Date();
-	    this.timeStamp = da.getTime();	
+	    this.timeStamp = da;	
 	}
 
-	public long getTimeStamp() {	
+	public Date getTimeStamp() {	
 		return timeStamp;
 	}
 	public String toString() {

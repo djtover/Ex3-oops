@@ -12,7 +12,7 @@ public class Packman {
 	private static int size= 0;
 	private int id;
 	private int radius;
-	private MetaData md;
+	private long timeStamp;
 	private Path path;
 	private Point3D startingPoint;
 
@@ -35,10 +35,9 @@ public class Packman {
 		this.id = size;
 		this.size++;
 		this.radius = Radius;
-		md = new MetaData();
 		path = new Path();
 		startingPoint = new Point3D(p);
-//		path.add(p);
+		timeStamp = 0;
 	}
 	/**
 	 * This is a constructor to build a Packman from another Packman
@@ -49,19 +48,19 @@ public class Packman {
 		this.speed = other.getSpeed();
 		this.size = other.getsize();
 		this.radius = other.getRadius();
-		this.md = other.getMd();
+		timeStamp = other.getTimeStamp();
 		this.path = other.getPath();
 		startingPoint = other.getStartingPoint();
 		
 	}
 
+	public long getTimeStamp() {
+		return timeStamp;
+	}
 	public Path getPath() {
 		return path;
 	}
 
-	public MetaData getMd() {
-		return md;
-	}
 
 	public Point3D getP() {
 		return p;
@@ -100,6 +99,6 @@ public class Packman {
 		this.startingPoint = startingPoint;
 	}
 	public String toString() {
-		return(" Packman: "+ p+" Speed: "+ speed+ " ID: "+id +" Radius: "+radius+" "+ md + " "+path);
+		return(" Packman: "+ p+" Speed: "+ speed+ " ID: "+id +" Radius: "+radius+" "+ timeStamp + " "+path);
 	}
 }

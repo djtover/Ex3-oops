@@ -16,6 +16,7 @@ public class Fruit {
 	private static int size=0;
 	private int id;
 	private long timeStamp;
+//	private MetaData timeFound;
 	private Packman pred;	
 	/**
 	 * This is constructor to build a new Fruit
@@ -29,7 +30,7 @@ public class Fruit {
 		this.weight = Weight;
 		id = size;
 		this.size++;
-		timeStamp=0;
+		timeStamp= 0;
 		pred = null;
 	}
 	/**
@@ -40,7 +41,7 @@ public class Fruit {
 		this.p = other.getP();
 		this.weight = other.getWeight();
 		this.size = other.getsize();
-		timeStamp = other.getTime();
+		timeStamp = other.getTimeStamp();
 		pred = other.getPred();
 	}
 
@@ -73,13 +74,6 @@ public class Fruit {
 	public int getsize() {
 		return size;
 	}
-	public long getTime() {
-		return timeStamp;
-	}
-	public void setTime() {
-		Date d =  new Date();
-		this.timeStamp = d.getTime();
-	}
 	public Packman getPred() {
 		return pred;
 	}
@@ -87,6 +81,12 @@ public class Fruit {
 		this.pred = pred;
 	}
 
+	public long getTimeStamp() {
+		return timeStamp;
+	}
+	public void setTimeStamp(long timeStamp) {
+		this.timeStamp = timeStamp;
+	}
 	public String toString() {
 		return(" Fruit: "+ p+" Weight: " +this.weight+" ID: " +id+ " Time:" +timeStamp);
 	}

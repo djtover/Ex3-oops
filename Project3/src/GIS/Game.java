@@ -8,7 +8,14 @@ import java.util.Iterator;
 
 import FileFormat.FromCsv;
 import Geom.Point3D;
-
+/**
+ * This is class that represents the game
+ * Field 1: ALF is an ArrayList that hold all of the Fruit in the Game
+ * Field 2: ALP is an ArrayList that hold all of the Packman in the Game
+ * Field 3: time is the amount of time it takes for all the Fruit to be eaten by the Packmen
+ * @author djtov
+ *
+ */
 public class Game {
 
 	private ArrayList<Fruit> ALF;
@@ -20,7 +27,10 @@ public class Game {
 		time = 0;
 		
 	}
-	//csv file constructor
+	/**
+	 * This is constuctor that can receive a csv File and convert it to a game
+	 * @param csvFile is the path of the file that you wanto be in the game
+	 */
 	public Game(String csvFile) {
 		FromCsv fc = new FromCsv(csvFile); 
 		ALF = fc.getALF();
