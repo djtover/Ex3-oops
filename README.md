@@ -1,1 +1,1 @@
-# Ex3-oops
+This is Project that implements a Game that is to check the shortest path for multiple Packmen to eat multiple Fruit. In this Project you can read a game from a CSV file and could also save to a CSV and KML file.
