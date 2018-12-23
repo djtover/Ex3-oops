@@ -59,6 +59,10 @@ public class MainWindow extends JFrame implements MouseListener, ComponentListen
 	private ArrayList<Packman> pointsPack = new ArrayList<Packman>();
 	private ArrayList<Fruit> pointsFruit = new ArrayList<Fruit>();
 	private static int c = 1;
+	private ShortestPathAlgo spa;
+	private Game game;
+	private Solution s;
+	private boolean isResized;
 	
 
 	/**
@@ -71,6 +75,7 @@ public class MainWindow extends JFrame implements MouseListener, ComponentListen
 		isPack = false;
 		isFruit = false;
 		isRun = false;
+		isResized = false;
 		initGUI(imageName);		
 		this.addMouseListener(this);
 
@@ -96,6 +101,7 @@ public class MainWindow extends JFrame implements MouseListener, ComponentListen
 		MenuItem fromCsv = new MenuItem ("Import CSV File");
 		MenuItem toKml = new MenuItem ("Save to KML");
 
+//		this is a listener if the to Csv button was clicked
 		toCsv.addActionListener(new ActionListener() {
 
 			@Override
@@ -104,6 +110,7 @@ public class MainWindow extends JFrame implements MouseListener, ComponentListen
 				isPack = false;
 				isRun = false;
 				isFruit = false;
+				isResized = false;
 				
 				JFileChooser jfc = new JFileChooser();
 				jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -121,7 +128,8 @@ public class MainWindow extends JFrame implements MouseListener, ComponentListen
 			
 		});
 		
-		
+//		this is a listener if the to Kml button was clicked
+
 		toKml.addActionListener(new ActionListener() {
 
 			@Override
@@ -130,7 +138,8 @@ public class MainWindow extends JFrame implements MouseListener, ComponentListen
 				isPack = false;
 				isRun = false;
 				isFruit = false;
-				
+				isResized = false;
+
 				JFileChooser jfc = new JFileChooser();
 				jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				jfc.setAcceptAllFileFilterUsed(false);
@@ -146,7 +155,8 @@ public class MainWindow extends JFrame implements MouseListener, ComponentListen
 			}
 		});
 		
-		
+//		this is a listener if the Packman button was clicked
+
 		PackMenu.addActionListener(new ActionListener() {
 
 			@Override
@@ -155,9 +165,11 @@ public class MainWindow extends JFrame implements MouseListener, ComponentListen
 				isPack = true;
 				isFruit = false;
 				isRun=false;
+				isResized = false;
 
 			}
 		});
+//		this is a listener if the Fruit button was clicked
 
 		FruitMenu.addActionListener(new ActionListener() {
 
@@ -167,8 +179,11 @@ public class MainWindow extends JFrame implements MouseListener, ComponentListen
 				isFruit = true;
 				isPack = false;
 				isRun = false;
+				isResized = false;
+
 			}
 		});
+//		this is a listener if the Run button was clicked
 
 		RunMenu.addActionListener(new ActionListener() {
 
@@ -179,9 +194,12 @@ public class MainWindow extends JFrame implements MouseListener, ComponentListen
 				isPack=false;
 				isFruit = false;
 				isRun =true;
+				isResized = false;
+
 				repaint();
 			}
 		});
+//		this is a listener if the Clear button was clicked
 
 		ClearMenu.addActionListener(new ActionListener() {
 
@@ -192,11 +210,14 @@ public class MainWindow extends JFrame implements MouseListener, ComponentListen
 				isPack=false;
 				isFruit = false;
 				isRun =false;
+				isResized = false;
+
 				pointsPack.clear();
 				pointsFruit.clear();
 				repaint();
 			}
 		});
+//		this is a listener if the From Csv button was clicked
 
 		fromCsv.addActionListener(new ActionListener() {
 
@@ -206,6 +227,8 @@ public class MainWindow extends JFrame implements MouseListener, ComponentListen
 				isPack=false;
 				isFruit = false;
 				isRun =false;
+				isResized = false;
+
 				pointsPack.clear();
 				pointsFruit.clear();
 				repaint();
@@ -232,6 +255,8 @@ public class MainWindow extends JFrame implements MouseListener, ComponentListen
 						isPack= false;
 						isFruit = false;
 						isRun = false;
+						isResized = false;
+
 						for(int i=0;i<csvFile.getALP().size();i++) {
 							System.out.println(pointsPack.get(i));
 						}
@@ -270,37 +295,40 @@ public class MainWindow extends JFrame implements MouseListener, ComponentListen
 
 	}
 	/**
-	 * This is a method thats paints on the image that will put Packmans and Fruits on the image
+	 * This is a method thats paints on the image that will put Packmans and Fruits on the image and also paints the paths of the Packmen
 	 */
 	public void paint(Graphics g)
 	{
 		Map m = new Map(getWidth(),getHeight(),"Ariel1.png");
 
 		g.drawImage(myImage, 0, 0, getWidth()-8,getHeight()-8, this);
-
+	
 		if(x!=-1 && y!=-1 )
 		{
 			
 			Point3D point = new Point3D(x,y);
 			Point3D newPoint=new Point3D (m.Pixels2Coords(point, getWidth(), getHeight()));
+//			if it is putting down packmen on the screen then make a new packman and save it to the arraylist of packmen
 			if(isPack) {
 				Packman p1 = new Packman(newPoint.x(),newPoint.y(),0,1,1);
 				pointsPack.add(p1);
 				System.out.println(p1);
 			}
+//			if it is putting down Fruit on the screen then make a new Fruit and save it to the arraylist of Fruit
+
 			if(isFruit) {
 				Fruit f1 = new Fruit(newPoint.x(),newPoint.y(),0,1);
 				pointsFruit.add(f1);
 				System.out.println(f1);
 			}
 		}
+//		if run button was clicked then add the drawing of the paths
 		if(isRun) {
-			Game game = new Game(pointsPack,pointsFruit);
-           
-
-			ShortestPathAlgo spa = new ShortestPathAlgo(game);
-			Solution s = new Solution(spa.getSolution());
-//			System.out.println(s.getGame());
+			if(!isResized) {
+			 game = new Game(pointsPack,pointsFruit);
+			 spa = new ShortestPathAlgo(game);
+			 s = new Solution(spa.getSolution());
+			}
 			for(int i=0; i<s.getGame().getALP().size();i++) {
 				if(s.getGame().getALP().get(i).getPath().size()>0) {
 					g.setColor(Color.CYAN);
@@ -316,7 +344,7 @@ public class MainWindow extends JFrame implements MouseListener, ComponentListen
 				}
 			}	
 		}
-		
+//		add all the Packmen
 		for(int i = 0 ; i<pointsPack.size();i++) {
 			int r = 30;
 			Point3D pointDraw =  m.Coords2Pixels(pointsPack.get(i).getP());
@@ -325,6 +353,7 @@ public class MainWindow extends JFrame implements MouseListener, ComponentListen
 			g.setColor(Color.YELLOW);
 			g.fillOval(x, y, r, r);
 		}
+//		add all the Fruit
 		for(int i = 0 ; i<pointsFruit.size();i++) {
 			int r = 10;
 			Point3D pointDraw =  m.Coords2Pixels(pointsFruit.get(i).getP());
@@ -385,11 +414,9 @@ public class MainWindow extends JFrame implements MouseListener, ComponentListen
 	@Override
 	public void componentResized(ComponentEvent arg0) {
 		// TODO Auto-generated method stub
-		//		System.out.println("resized " + getWidth()+" "+ getHeight());
 		isPack = false;
 		isFruit = false;
-		isRun = false;
-//		repaint();
+		isResized = true;
 	}
 
 	@Override

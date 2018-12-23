@@ -17,9 +17,9 @@ public class Path {
 	private int weight;
 
 	/**
-	 * @param AL is the ArrayList that holds the Fruit for the Path
-	 * @param time is the time it takes for the Packman to go through all the Fruit in the Path
-	 * @param weight is the amount of weight the Pacman has accumulated through the Path 
+	 *  AL is the ArrayList that holds the Fruit for the Path
+	 *  time is the time it takes for the Packman to go through all the Fruit in the Path
+	 *  weight is the amount of weight the Pacman has accumulated through the Path 
 	 */
 	public Path() {
 		this.AL  = new ArrayList<Fruit>();

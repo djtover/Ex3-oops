@@ -23,7 +23,12 @@ public class Map {
 	private double lonPerWidth;
 	private double width;
 	private double height;
-	
+	/**
+	 * This is a constructor for the Map
+	 * @param w The Width of the Map
+	 * @param h The Height of the Map
+	 * @param image the path of the Image you want to put in
+	 */
 	public Map(double w, double h , String image) {
 		width = w;
 		height = h;
@@ -31,6 +36,11 @@ public class Map {
 		lonPerWidth = diffLon/width;
 		latPerHeight = diffLat/height;
 	}
+	/**
+	 * This is a method that converts from coordinates to pixels
+	 * @param p1 A Point in coordinates
+	 * @return A Point in pixels
+	 */
 	public Point3D Coords2Pixels(Point3D p1) {
 
 		
