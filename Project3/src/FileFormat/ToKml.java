@@ -40,7 +40,9 @@ public class ToKml {
 				String lon = ""+ alp.get(i).getStartingPoint().y();
 				String timeStamp = "" + convertTime(alp.get(i).getTimeStamp());
 
-				String context = "<Placemark>\r\n" + 
+				String context = "<Folder>\r\n"+
+						"<name>"+"Packman"+id+"</name>\r\n"
+						+ "<Placemark>\r\n" + 
 						"<name>"+"Packman"+id+"</name>\r\n" + 
 						"<description>A Packman Point</description>\r\n"+
 						"<Point>\r\n" + 
@@ -62,10 +64,12 @@ public class ToKml {
 							"<description>A Fruit Point on Packman "+ i +"'s path</description>\r\n"+
 							"<Point>\r\n" + 
 							"<coordinates>"+lon+","+lat+"</coordinates></Point>\r\n" + 
-							"<TimeStamp>\r\n <when>"+ timeStamp+"</when>\r\n </TimeStamp>/r/n"+
+							"<TimeStamp>\r\n <when>"+ timeStamp+"</when>\r\n </TimeStamp>\r\n"+
 							"</Placemark>\r\n" ;
 					bw.write(context);
 				}
+				String endFolder = "</Folder>\r\n";
+				bw.write(endFolder);
 			}
 			
 			
@@ -117,7 +121,11 @@ public class ToKml {
 	 */
 	private String convertTime(long time){
 	    Date date = new Date(time*1000);
-	    Format format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	    return format.format(date);
+	    Format format = new SimpleDateFormat("yyyy-MM-ddHH:mm:ss");
+	    String ans = format.format(date);
+	    String end ="T"+ ans.substring(10);
+	    ans = ans.substring(0, 10) +end;
+	    
+	    return ans;
 	}
 }
