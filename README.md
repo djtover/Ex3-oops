@@ -46,7 +46,8 @@ How the game works is that either you add a csv file that you would like to use 
 
 ![screenshot 135](https://user-images.githubusercontent.com/45014488/50423206-1fcbb200-085b-11e9-983e-99fa9feb3184.png)
 
-![Screenshot](Screenshot(136).png)
-![Screenshot](Screenshot(137).png)
+![screenshot 136](https://user-images.githubusercontent.com/45014488/50423215-425dcb00-085b-11e9-8e0b-d92948854cbb.png)
+
+![screenshot 137](https://user-images.githubusercontent.com/45014488/50423216-4c7fc980-085b-11e9-8454-8c46a9273493.png)
 
 
