@@ -44,6 +44,8 @@ How the Game Runs:
 How the game works is that either you add a csv file that you would like to use for the game or the user could input the Packmen and Fruit themself and after that they click on Run and the Game will show that quickest way for the Packmen to eat the Fruit by running the ShortestPathAlgo. After the Game has been run then you could either save the game as a csv file or kml file by clicking on file then clicking on whichever format you would like to save it as.
 
 
-
+![Screenshot](Screenshot(135).png)
+![Screenshot](Screenshot(136).png)
+![Screenshot](Screenshot(137).png)
 
 
